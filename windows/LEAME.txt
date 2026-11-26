@@ -1,0 +1,56 @@
+SISTEMA DE TICKETS DE SOPORTE - Version para Windows
+====================================================
+Desarrollado por la Seccion de Servicios Informaticos - Circunscripcion
+Judicial de Cordillera, con la asistencia de Claude (IA de Anthropic).
+
+No necesita internet ni instalar nada. Todo esta en esta carpeta.
+Convive con la Pizarra de Interinatos (C:\Pizarra, puerto 8090) y con XAMPP.
+
+INSTALACION (en la PC que hace de servidor, por ejemplo 172.31.60.254)
+---------------------------------------------------------------------
+1. Copie la carpeta "Tickets" a C:\  (debe quedar C:\Tickets).
+   No la ponga dentro de "Archivos de programa" ni en el Escritorio.
+
+2. Doble clic en  1-crear-administrador.bat
+   Escriba un usuario para el JEFE (por ejemplo: jefe), su nombre y una contrasena.
+
+3. (Opcional) Doble clic en  2-probar-en-esta-ventana.bat
+   Se abre el navegador con el sistema. Funciona mientras la ventana negra
+   este abierta. Cierrela al terminar de probar.
+
+4. Clic derecho en  3-instalar-como-servicio.bat  ->  "Ejecutar como administrador"
+   Desde ahora el sistema se inicia solo al encender la PC (aunque nadie
+   inicie sesion), se hace un respaldo cada noche a las 23:45, se guarda un
+   resumen diario a las 13:30 (lunes a viernes) y se abre el puerto 8091
+   en el firewall.
+
+5. Entre como jefe -> menu (su nombre) -> Administracion:
+   - Usuarios: cree un usuario TECNICO para cada uno de los 5 tecnicos.
+   - Areas: cargue los juzgados y oficinas que piden soporte.
+
+6. Los tecnicos entran desde su navegador con:
+      http://172.31.60.254:8091
+
+OTROS ARCHIVOS
+--------------
+respaldo-ahora.bat ........... hace un respaldo en la carpeta "respaldos"
+restaurar-respaldo.bat ....... vuelve a un respaldo (como administrador)
+resumen-ahora.bat ............ genera el resumen del dia en "reportes"
+cargar-datos-de-ejemplo.bat .. datos ficticios para practicar
+desinstalar-servicio.bat ..... quita el inicio automatico (no borra datos)
+configuracion.txt ............ puerto, tiempos objetivo, correo del resumen
+
+DONDE QUEDAN LOS DATOS
+----------------------
+datos\tickets.db ............. la base de datos (todos los tickets)
+datos\adjuntos\ .............. correos, capturas y archivos adjuntos
+datos\registros\tickets.log .. registro de funcionamiento y errores
+respaldos\ ................... respaldos (copielos a otro equipo seguido)
+reportes\ .................... resumenes diarios en HTML
+
+MANUAL DE USUARIO
+-----------------
+Dentro del sistema: menu (su nombre) -> Manual de usuario, o el enlace de la
+pantalla de ingreso. Funciona sin internet.
+
+Guias completas: INSTALACION-WINDOWS.md y FLUJO-DIARIO.md

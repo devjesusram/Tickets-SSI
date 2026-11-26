@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tickets de Soporte</title>
+  <link rel="stylesheet" href="/static/estilos.css">
+</head>
+<body>
+  <header class="barra">
+    <h1>🎫 Tickets de Soporte <span class="sub ocultar-movil" id="oficina"></span></h1>
+    <div class="nav">
+      <span id="actualizado" class="actualizado ocultar-movil"></span>
+      <button id="btn-sonido" class="ocultar-movil" title="Aviso sonoro cuando llega un ticket nuevo o le asignan uno">🔔</button>
+      <button id="btn-tv" class="ocultar-movil" title="Pantalla de solo lectura para un monitor de la oficina">Modo TV</button>
+      <div class="usuario">
+        <button id="btn-usuario" aria-haspopup="true">👤 <span id="nombre-usuario"></span> ▾</button>
+        <div class="menu" id="menu-usuario" hidden>
+          <button id="m-admin" hidden>⚙ Administración</button>
+          <button id="m-clave">🔑 Cambiar contraseña</button>
+          <button id="m-manual">📖 Manual de usuario</button>
+          <button id="m-acerca">ℹ Acerca de</button>
+          <button id="m-salir">↩ Salir</button>
+          <div class="version" id="m-version"></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <div class="herramientas">
+    <button class="btn primario" id="btn-nuevo">+ Nuevo ticket <kbd>N</kbd></button>
+    <div class="modos" role="tablist" id="vistas">
+      <button data-vista="mios" role="tab">📋 Mis tickets <span class="cuenta" id="n-mios"></span></button>
+      <button data-vista="disponibles" role="tab">📥 Disponibles <span class="cuenta" id="n-disponibles"></span></button>
+      <button data-vista="abiertos" role="tab">🗂 Todos los abiertos <span class="cuenta" id="n-abiertos"></span></button>
+      <button data-vista="buscar" role="tab">🔍 Historial</button>
+      <button data-vista="panel" role="tab" id="tab-panel" hidden>📊 Panel del jefe</button>
+    </div>
+    <span class="sep"></span>
+    <input type="search" id="f-rapido" placeholder="Filtrar: nº, asunto, solicitante…" aria-label="Filtrar la lista">
+  </div>
+
+  <main class="contenido" id="contenido"><div class="vacio">Cargando…</div></main>
+  <footer class="pie ocultar-movil">
+    <p class="creditos">Desarrollado por la Sección de Servicios Informáticos · Circunscripción Judicial de Cordillera ·
+      con la asistencia de Claude (IA de Anthropic)</p>
+  </footer>
+
+  <dialog id="modal"></dialog>
+  <dialog id="modal2"></dialog>
+  <div class="toast" id="toast" role="status" hidden></div>
+  <section class="tv" id="tv" hidden></section>
+
+  <script src="/static/app.js"></script>
+</body>
+</html>
