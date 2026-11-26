@@ -1,0 +1,50 @@
+# Publica un release con el ZIP para Windows cada vez que se crea una etiqueta «vX.Y.Z».
+#
+# Cómo se usa:
+#   1. Subir el número de versión en app/__init__.py (por ejemplo 1.1.0) y unirlo a main.
+#   2. En GitHub: Releases -> Draft a new release -> etiqueta «v1.1.0» sobre main -> Publish.
+#      (O crear la etiqueta desde la línea de comandos.)
+#   GitHub arma el ZIP y lo agrega solo al release.
+name: Publicar release
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: La etiqueta debe coincidir con la versión del sistema
+        run: |
+          version=$(python -c "import app; print(app.__version__)")
+          if [ "v$version" != "$GITHUB_REF_NAME" ]; then
+            echo "La etiqueta $GITHUB_REF_NAME no coincide con la versión $version de app/__init__.py"
+            exit 1
+          fi
+
+      - name: Pruebas automáticas
+        run: |
+          pip install -r requirements-dev.txt
+          python -m pytest -q
+
+      - name: Armar el paquete para Windows
+        run: python scripts/armar_paquete_windows.py
+
+      - name: Publicar el release con el ZIP
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "$GITHUB_REF_NAME" dist/Tickets-Windows-*.zip \
+            --title "Sistema de Tickets ${GITHUB_REF_NAME#v}" \
+            --generate-notes \
+            --notes "Descomprima el ZIP en C:\\ (queda C:\\Tickets) y siga LEAME.txt o docs/INSTALACION-WINDOWS.md. Incluye Python portátil: no hace falta instalar nada ni tener internet en el servidor. Desarrollado por la Sección de Servicios Informáticos · Circunscripción Judicial de Cordillera · con la asistencia de Claude (IA de Anthropic)."
