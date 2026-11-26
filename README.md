@@ -73,14 +73,14 @@ desde el navegador.
 
 | | Valor |
 |---|---|
-| Servidor | `172.31.60.254` (Windows, sin internet, con XAMPP en 80/443) |
-| Carpeta | `C:\Tickets` |
-| Dirección | `http://172.31.60.254:8091` |
+| Servidor | (Windows, sin internet, con XAMPP |
+| Carpeta | 
+| Dirección | 
 | Tareas programadas | «Tickets de Soporte», «… - Respaldo» (23:45), «… - Resumen» (13:30) |
 | Cookie de sesión | `tickets_sesion` (la Pizarra usa `pizarra_sesion`) |
 | Convive con | Pizarra de Interinatos (`C:\Pizarra`, puerto 8090) |
 
-1. Descomprimir `Tickets-Windows-X.Y.Z.zip` en `C:\`.
+1. Descomprimir `Tickets-Windows-X.Y.Z.zip`.
 2. `1-crear-administrador.bat` → usuario del jefe.
 3. `3-instalar-como-servicio.bat` (como administrador).
 4. Entrar como jefe → Administración → crear los 5 técnicos y las áreas.
