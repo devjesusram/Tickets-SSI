@@ -1,0 +1,42 @@
+# Configuracion del Sistema de Tickets de Soporte
+# Despues de cambiar algo, ejecute 3-instalar-como-servicio.bat de nuevo (como administrador).
+
+# Puerto: los companeros entran con http://IP-DE-ESTA-PC:8091
+# (8090 lo usa la Pizarra de Interinatos; 80 y 443, el XAMPP)
+PUERTO=8091
+
+NOMBRE_CIRCUNSCRIPCION=Circunscripción Judicial de Cordillera
+NOMBRE_OFICINA=Sección de Servicios Informáticos
+
+# Horas que dura una sesion antes de pedir de nuevo la contrasena
+SESION_HORAS=12
+
+# Dias que se guardan los respaldos automaticos
+DIAS_RESPALDO=30
+
+# Tamano maximo de cada adjunto (correo, captura de WhatsApp, PDF), en MB
+ADJUNTO_MAX_MB=15
+
+# Tiempo objetivo de resolucion, en horas, segun la prioridad.
+# Pasado ese tiempo el ticket aparece como ATRASADO.
+OBJETIVO_HORAS_URGENTE=4
+OBJETIVO_HORAS_ALTA=24
+OBJETIVO_HORAS_MEDIA=72
+OBJETIVO_HORAS_BAJA=168
+
+# Minutos que un ticket puede quedar sin asignar antes de resaltarse
+ALERTA_SIN_ASIGNAR_MIN=30
+
+# Hora del resumen diario automatico (se guarda en la carpeta "reportes")
+HORA_RESUMEN=13:30
+
+# (Opcional) Enviar el resumen diario por correo, usando el servidor de correo
+# INTERNO de la institucion. Dejelo vacio si no hay uno accesible desde esta PC.
+SMTP_SERVIDOR=
+SMTP_PUERTO=25
+SMTP_TLS=false
+SMTP_USUARIO=
+SMTP_CLAVE=
+SMTP_REMITENTE=
+# Varios destinatarios separados por coma
+RESUMEN_DESTINATARIOS=

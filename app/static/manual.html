@@ -1,0 +1,291 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Manual de usuario · Tickets de Soporte</title>
+  <link rel="stylesheet" href="/static/estilos.css">
+  <style>
+    body { display: block; background: var(--fondo); }
+    .manual { max-width: 980px; margin: 0 auto; padding: 0 16px 60px; }
+    .manual-cab { background: var(--primario); color: #fff; padding: 14px 16px; position: sticky; top: 0; z-index: 5; }
+    .manual-cab .dentro { max-width: 980px; margin: 0 auto; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+    .manual-cab h1 { font-size: 17px; margin: 0; }
+    .manual-cab a { color: #fff; margin-left: auto; border: 1px solid rgba(255,255,255,.4); border-radius: 6px; padding: 4px 10px; text-decoration: none; }
+    .manual-cab button { background: rgba(255,255,255,.14); color: #fff; border: 1px solid rgba(255,255,255,.4); border-radius: 6px; padding: 4px 10px; cursor: pointer; }
+    .hoja { background: var(--panel); border-radius: 10px; padding: 24px 28px; margin-top: 20px; box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+    .hoja h2 { font-size: 21px; margin: 0 0 12px; color: var(--primario); scroll-margin-top: 70px; }
+    .hoja h3 { font-size: 15px; margin: 18px 0 6px; }
+    .hoja p, .hoja li { line-height: 1.55; }
+    .hoja ol, .hoja ul { padding-left: 22px; }
+    .hoja li { margin: 4px 0; }
+    .hoja table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 14px; }
+    .hoja th, .hoja td { text-align: left; padding: 7px 9px; border-bottom: 1px solid var(--borde); vertical-align: top; }
+    .hoja th { background: var(--fondo); }
+    figure { margin: 14px 0 20px; }
+    figure img { max-width: 100%; height: auto; border: 1px solid var(--borde); border-radius: 8px; display: block; cursor: zoom-in; }
+    figcaption { font-size: 13px; color: var(--texto-suave); margin-top: 6px; font-style: italic; }
+    .indice { columns: 2; column-gap: 32px; padding-left: 20px; }
+    .indice li { break-inside: avoid; }
+    .nota { background: var(--interino-fondo); border-left: 4px solid var(--interino); padding: 10px 14px; border-radius: 6px; }
+    .zoom { position: fixed; inset: 0; background: rgba(15, 27, 45, .85); display: flex; align-items: center; justify-content: center; z-index: 50; cursor: zoom-out; padding: 16px; }
+    .zoom img { max-width: 100%; max-height: 100%; border-radius: 8px; }
+    @media (max-width: 700px) { .hoja { padding: 16px; } .indice { columns: 1; } }
+    @media print {
+      .manual-cab { position: static; } .manual-cab a, .manual-cab button { display: none; }
+      .hoja { box-shadow: none; padding: 0; } section.hoja { break-before: page; }
+      figure img { cursor: default; }
+    }
+  </style>
+</head>
+<body>
+  <header class="manual-cab"><div class="dentro">
+    <h1>🎫 Manual de usuario · Tickets de Soporte</h1>
+    <button onclick="window.print()">🖨 Imprimir</button>
+    <a href="/">← Volver al sistema</a>
+  </div></header>
+
+  <main class="manual">
+    <div class="hoja">
+      <p>El sistema de Tickets registra <b>todos los pedidos</b> que llegan a la Sección de Servicios Informáticos por
+        <b>teléfono interno, WhatsApp, correo</b> o en persona, los reparte entre los técnicos y muestra al jefe la carga de
+        trabajo y los tiempos. Se usa desde el navegador en <b>http://172.31.60.254:8091</b>.</p>
+      <p class="nota"><b>Regla de oro: todo pedido es un ticket.</b> Aunque se resuelva en dos minutos por teléfono, se carga
+        (hay una casilla para los que se resuelven en el momento). Así queda la historia y se ve la carga real.</p>
+      <p class="ayuda">Las capturas usan datos de ejemplo con nombres ficticios.</p>
+      <ol class="indice">
+        <li><a href="#ingresar">Ingresar y conocer la pantalla</a></li>
+        <li><a href="#cargar">Cargar un ticket</a></li>
+        <li><a href="#canales">Pedidos por teléfono, WhatsApp y correo</a></li>
+        <li><a href="#duplicados">Avisos y bloqueos</a></li>
+        <li><a href="#tomar">Tomar tickets disponibles</a></li>
+        <li><a href="#trabajar">Trabajar un ticket: estados y notas</a></li>
+        <li><a href="#listas">Todos los abiertos e historial</a></li>
+        <li><a href="#panel">Panel del jefe</a></li>
+        <li><a href="#asignar">Asignar y reasignar</a></li>
+        <li><a href="#admin">Menú y administración</a></li>
+        <li><a href="#tv">Avisos, Modo TV y resumen diario</a></li>
+        <li><a href="#colores">Estados, colores y prioridades</a></li>
+        <li><a href="#preguntas">Preguntas frecuentes</a></li>
+      </ol>
+    </div>
+
+    <section class="hoja" id="ingresar">
+      <h2>1. Ingresar y conocer la pantalla</h2>
+      <p>Abra el navegador (Chrome, Edge o Firefox), escriba <b>http://172.31.60.254:8091</b> e ingrese con el usuario y la
+        contraseña que le dio el jefe. La sesión dura 12 horas.</p>
+      <figure><img src="/static/manual/01-ingreso.png" alt="Pantalla de ingreso" loading="lazy"><figcaption>Pantalla de ingreso.</figcaption></figure>
+      <p>Arriba están el botón <b>+ Nuevo ticket</b> (o la tecla <b>N</b>) y las pestañas:</p>
+      <ul>
+        <li><b>📋 Mis tickets</b>: lo que tiene asignado, en columnas por estado. El número indica cuántos tiene abiertos.</li>
+        <li><b>📥 Disponibles</b>: tickets sin asignar. El número se pone <b style="color:var(--sin-cubrir)">ámbar</b> si alguno espera más de 30 minutos.</li>
+        <li><b>🗂 Todos los abiertos</b>: los de todos los técnicos.</li>
+        <li><b>🔍 Historial</b>: buscar tickets viejos y exportarlos a Excel.</li>
+        <li><b>📊 Panel del jefe</b>: solo lo ve el jefe.</li>
+      </ul>
+      <figure><img src="/static/manual/02-mis-tickets.png" alt="Mis tickets" loading="lazy"><figcaption>📋 Mis tickets: Asignados (por empezar), En proceso, En espera y Resueltos de los últimos 7 días. Los urgentes y atrasados aparecen primero.</figcaption></figure>
+      <p>La pantalla <b>se actualiza sola</b> cada 15 segundos («● Actualizado hace…» en la barra): no hace falta apretar F5.
+        Si no hay conexión con el servidor, aparece «⚠ Sin conexión».</p>
+    </section>
+
+    <section class="hoja" id="cargar">
+      <h2>2. Cargar un ticket</h2>
+      <p>Botón <b>+ Nuevo ticket</b> o tecla <b>N</b>. El formulario está en cuatro partes:</p>
+      <ol>
+        <li><b>¿Cómo llegó el pedido?</b> El <b>canal</b> (📞 Teléfono interno, 💬 WhatsApp, ✉ Correo, 🙋 Presencial), una
+          <b>referencia</b> (el interno que llamó, el número de WhatsApp, el asunto del correo) y la hora en que se
+          <b>recibió</b>. Si lo carga más tarde, ponga la hora real: los tiempos se cuentan desde ahí.</li>
+        <li><b>¿Quién lo pide?</b> El <b>solicitante</b> (Apellido, Nombre), cómo contactarlo y su <b>área</b>. Si esa persona ya
+          pidió antes, al escribir su nombre el sistema lo sugiere y completa solo el contacto y el área.</li>
+        <li><b>¿Qué necesita?</b> Un <b>asunto</b> corto y claro, la <b>categoría</b>, la <b>descripción</b> (mensaje de error, nº de
+          patrimonio del equipo…) y la <b>prioridad</b>.</li>
+        <li><b>¿Quién lo atiende?</b> Déjelo <b>sin asignar</b> (queda en «Disponibles» para que lo tome quien pueda), asígneselo
+          a usted o a un compañero.</li>
+      </ol>
+      <figure><img src="/static/manual/03-nuevo-telefono.png" alt="Nuevo ticket por teléfono" loading="lazy"><figcaption>Nuevo ticket de un pedido por teléfono interno.</figcaption></figure>
+      <h3>Pedidos que se resuelven en el momento</h3>
+      <p>Si lo solucionó durante la llamada (blanqueo de contraseña, reconectar la impresora…), marque
+        <b>«Ya se resolvió en el momento»</b> y escriba la solución. El ticket queda resuelto y a su nombre.</p>
+      <figure><img src="/static/manual/04-resuelto-en-el-momento.png" alt="Resuelto en el momento" loading="lazy"><figcaption>Casilla «Ya se resolvió en el momento» con la solución.</figcaption></figure>
+      <p>Al guardar aparece el <b>número del ticket</b> (por ejemplo «Ticket #45 creado»). Dígaselo al solicitante: si vuelve a
+        llamar, se busca por ese número.</p>
+    </section>
+
+    <section class="hoja" id="canales">
+      <h2>3. Pedidos por teléfono, WhatsApp y correo</h2>
+      <table>
+        <tr><th>Canal</th><th>Qué hacer</th></tr>
+        <tr><td>📞 Teléfono interno</td><td>Cargue el ticket <b>mientras habla</b>. En «Referencia», el interno. Antes de cortar, dígale el número de ticket.</td></tr>
+        <tr><td>💬 WhatsApp</td><td>Copie y pegue el texto del mensaje en la descripción (desde WhatsApp Web). Si mandó una foto o un audio, descárguelo y
+          <b>arrástrelo</b> a la zona punteada del formulario. Respóndale con el número de ticket.</td></tr>
+        <tr><td>✉ Correo</td><td>Guarde el correo como archivo <b>.eml</b> (o arrástrelo desde el programa de correo al escritorio) y <b>arrástrelo a la
+          zona punteada</b>: se completan solos el solicitante, su correo, el asunto, la descripción y la hora, y el correo queda adjunto.</td></tr>
+        <tr><td>🙋 Presencial</td><td>Cárguelo apenas pueda y corrija la hora de «Recibido».</td></tr>
+      </table>
+      <figure><img src="/static/manual/05-correo-eml.png" alt="Ticket desde un correo .eml" loading="lazy"><figcaption>Después de arrastrar el .eml: los datos del correo ya están completos. Solo falta elegir área, categoría y prioridad.</figcaption></figure>
+    </section>
+
+    <section class="hoja" id="duplicados">
+      <h2>4. Avisos y bloqueos</h2>
+      <p>El sistema controla los datos antes de guardar, igual que la Pizarra:</p>
+      <ul>
+        <li><b>⚠ Advertencia</b> (fondo ámbar): se puede guardar igual, confirmando. La confirmación queda en la auditoría.
+          Por ejemplo, <b>posible duplicado</b>: ya hay tickets abiertos del mismo solicitante o del mismo área y categoría. Si es el mismo
+          pedido, mejor cancele y agregue una <b>nota</b> al ticket que ya existe.</li>
+        <li><b>⛔ Bloqueo</b> (fondo rojo): no se puede guardar. Por ejemplo, resolver sin escribir la solución, o una fecha de recepción futura.</li>
+        <li><b>⚠ El ticket cambió</b>: otro usuario lo modificó mientras usted lo tenía abierto. Ciérrelo y vuelva a abrirlo para ver los cambios.</li>
+      </ul>
+      <figure><img src="/static/manual/06-posible-duplicado.png" alt="Aviso de posible duplicado" loading="lazy"><figcaption>Aviso de posible duplicado: indica los tickets parecidos que ya están abiertos.</figcaption></figure>
+    </section>
+
+    <section class="hoja" id="tomar">
+      <h2>5. Tomar tickets disponibles</h2>
+      <p>En <b>📥 Disponibles</b> están los tickets que nadie tomó, ordenados por atraso, prioridad y antigüedad. Con
+        <b>✋ Tomar</b>, el ticket pasa a «Asignado» a su nombre y aparece en «Mis tickets».</p>
+      <p>Si dos técnicos aprietan «Tomar» a la vez, <b>solo uno lo consigue</b>; el otro ve el aviso «ya lo tomó…».</p>
+      <figure><img src="/static/manual/07-disponibles.png" alt="Disponibles" loading="lazy"><figcaption>Tickets disponibles con el botón ✋ Tomar.</figcaption></figure>
+    </section>
+
+    <section class="hoja" id="trabajar">
+      <h2>6. Trabajar un ticket: estados y notas</h2>
+      <p>Haga clic en un ticket para abrir su <b>ficha</b>: datos del pedido, adjuntos, historial y botones de acción.</p>
+      <figure><img src="/static/manual/08-ficha.png" alt="Ficha del ticket" loading="lazy"><figcaption>Ficha de un ticket en proceso, con el historial y las notas.</figcaption></figure>
+      <table>
+        <tr><th>Botón</th><th>Qué hace</th></tr>
+        <tr><td>▶ Iniciar / Retomar</td><td>Pasa a <b>En proceso</b>: está trabajando en él.</td></tr>
+        <tr><td>⏸ En espera</td><td>Depende de otro (repuesto, proveedor, el usuario no está). Pide el <b>motivo</b>. Mientras espera, no cuenta como atrasado.</td></tr>
+        <tr><td>✔ Resolver</td><td>Pide la <b>solución</b> aplicada (obligatoria). Sirve como referencia para casos parecidos.</td></tr>
+        <tr><td>↺ Reabrir</td><td>En un ticket resuelto, si el problema volvió. Pide el motivo. Mejor que crear uno nuevo.</td></tr>
+        <tr><td>👥 Reasignar / liberar</td><td>Pasarlo a un compañero o devolverlo a «Disponibles».</td></tr>
+        <tr><td>✎ Editar datos</td><td>Corregir solicitante, área, asunto, prioridad, etc.</td></tr>
+        <tr><td>Anular</td><td>Para duplicados o errores de carga (lo puede hacer el jefe o quien lo cargó). No se borra: queda anulado con el motivo.</td></tr>
+      </table>
+      <figure><img src="/static/manual/09-resolver.png" alt="Resolver" loading="lazy"><figcaption>Al resolver se escribe la solución aplicada.</figcaption></figure>
+      <p><b>Notas:</b> abajo de la ficha, escriba lo que hizo («se cambió el cable», «se llamó, no estaba») y apriete
+        <b>Agregar nota</b>. <b>Adjuntos:</b> «📎 Adjuntar archivo» para sumar correos, capturas, audios o PDF.</p>
+      <p class="nota">Un técnico solo puede cambiar sus tickets y los disponibles. Los de otro técnico los cambia esa persona o el jefe,
+        pero <b>cualquiera puede dejar una nota</b> para ayudar.</p>
+      <p>En «Mis tickets», cada tarjeta tiene botones rápidos <b>▶ Iniciar</b> y <b>✔ Resolver</b> para no tener que abrir la ficha.</p>
+    </section>
+
+    <section class="hoja" id="listas">
+      <h2>7. Todos los abiertos e historial</h2>
+      <p><b>🗂 Todos los abiertos</b> muestra los tickets abiertos de todo el equipo, con filtros por técnico, estado (incluido
+        «⏰ Solo atrasados») y prioridad. El cuadro de la derecha («Filtrar…») busca por número, asunto, solicitante o área.</p>
+      <figure><img src="/static/manual/10-abiertos.png" alt="Todos los abiertos" loading="lazy"><figcaption>Todos los abiertos. La barra roja a la izquierda marca los urgentes; el fondo rosado, los atrasados.</figcaption></figure>
+      <p><b>🔍 Historial</b> busca en todos los tickets, también los viejos y resueltos, por fechas, estado, técnico, canal,
+        área, categoría y texto (busca también dentro de las soluciones y las notas). Escriba <b>#45</b> para ir a un ticket.
+        <b>⇩ Exportar a Excel (CSV)</b> descarga el resultado como planilla.</p>
+      <figure><img src="/static/manual/11-historial.png" alt="Historial" loading="lazy"><figcaption>Historial con filtros y exportación a Excel.</figcaption></figure>
+    </section>
+
+    <section class="hoja" id="panel">
+      <h2>8. Panel del jefe</h2>
+      <p>La pestaña <b>📊 Panel del jefe</b> (solo para el rol Jefe) muestra:</p>
+      <ul>
+        <li><b>Cifras del momento:</b> abiertos, sin asignar, atrasados, en espera, recibidos y resueltos hoy. Clic en una
+          cifra abre la lista filtrada.</li>
+        <li><b>Tiempos del período</b> (7, 30, 90 o 365 días): tiempo medio hasta asignar, tiempo medio de resolución y
+          porcentaje de resueltos dentro del objetivo.</li>
+        <li><b>Carga de trabajo por técnico:</b> asignados, en proceso, en espera, abiertos, urgentes, atrasados, ticket más antiguo,
+          resueltos (hoy, semana, período), tiempo medio y porcentaje en objetivo. Clic en «Abiertos» para ver sus tickets.</li>
+      </ul>
+      <figure><img src="/static/manual/12-panel.png" alt="Panel del jefe" loading="lazy"><figcaption>Panel del jefe: cifras y carga por técnico.</figcaption></figure>
+      <p>Más abajo: abiertos por estado y prioridad; pedidos por canal; categorías y áreas que más piden; y las listas de
+        <b>atrasados</b> y <b>sin asignar</b>.</p>
+      <figure><img src="/static/manual/13-panel-abajo.png" alt="Panel del jefe, parte inferior" loading="lazy"><figcaption>Categorías y áreas más frecuentes, atrasados y sin asignar.</figcaption></figure>
+      <p><b>🖨 Resumen del día</b> abre un informe imprimible. <b>⇩ Exportar período (CSV)</b> descarga todos los tickets del período
+        para Excel (informes mensuales, compras, etc.).</p>
+    </section>
+
+    <section class="hoja" id="asignar">
+      <h2>9. Asignar y reasignar</h2>
+      <p>Desde la ficha, <b>👥 Asignar a… / Reasignar / liberar</b>. Elija el técnico y, si quiere, el motivo («conoce el sistema»,
+        «está en esa sede»). Al reasignar, el ticket vuelve a «Asignado» para que el nuevo técnico lo inicie. «Liberar» lo devuelve a
+        «Disponibles». Todo queda en el historial.</p>
+      <figure><img src="/static/manual/14-reasignar.png" alt="Reasignar" loading="lazy"><figcaption>Reasignar un ticket a otro técnico.</figcaption></figure>
+    </section>
+
+    <section class="hoja" id="admin">
+      <h2>10. Menú y administración</h2>
+      <p>El menú 👤 (su nombre, arriba a la derecha) tiene: <b>⚙ Administración</b> (solo el jefe), <b>🔑 Cambiar contraseña</b>,
+        <b>📖 Manual de usuario</b>, <b>ℹ Acerca de</b> y <b>↩ Salir</b>.</p>
+      <figure><img src="/static/manual/15-menu.png" alt="Menú del usuario" loading="lazy"><figcaption>Menú del usuario.</figcaption></figure>
+      <p>En <b>Administración</b> el jefe gestiona:</p>
+      <ul>
+        <li><b>Usuarios:</b> un usuario por técnico (rol <b>Técnico</b>) y el del jefe (rol <b>Jefe</b>). Para quien deja la oficina, use
+          «Editar» y desmarque «Puede ingresar»: así se conserva su historial.</li>
+        <li><b>Áreas:</b> juzgados y oficinas que piden soporte, con su localidad e interno.</li>
+        <li><b>Categorías:</b> tipos de pedido (impresora, red, correo…).</li>
+        <li><b>Auditoría:</b> quién hizo cada cambio y cuándo.</li>
+      </ul>
+      <figure><img src="/static/manual/16-admin-usuarios.png" alt="Administración de usuarios" loading="lazy"><figcaption>Administración → Usuarios.</figcaption></figure>
+    </section>
+
+    <section class="hoja" id="tv">
+      <h2>11. Avisos, Modo TV y resumen diario</h2>
+      <ul>
+        <li><b>Avisos:</b> deje la pestaña del sistema abierta durante la jornada. Cuando entra un ticket nuevo o le asignan uno,
+          <b>suena un aviso</b>, aparece un mensaje abajo y el título de la pestaña muestra un número, por ejemplo «(2) Tickets de
+          Soporte». El botón <b>🔔 / 🔕</b> de la barra activa o silencia el sonido. Los navegadores solo permiten sonidos después
+          de hacer clic una vez en la página.</li>
+        <li><b>Modo TV:</b> pantalla de solo lectura para un monitor de la oficina: sin asignar y tickets de cada técnico, con los
+          urgentes y atrasados resaltados. Se actualiza sola. Para salir, <b>Esc</b>.</li>
+        <li><b>Resumen diario:</b> de lunes a viernes a las 13:30 el servidor guarda un resumen en <code>C:\Tickets\reportes</code>
+          (y lo envía por correo si se configuró).</li>
+      </ul>
+      <figure><img src="/static/manual/17-modo-tv.png" alt="Modo TV" loading="lazy"><figcaption>Modo TV para el monitor de la oficina.</figcaption></figure>
+    </section>
+
+    <section class="hoja" id="colores">
+      <h2>12. Estados, colores y prioridades</h2>
+      <table>
+        <tr><th>Estado</th><th>Significado</th></tr>
+        <tr><td><span class="chip NUEVO">Nuevo / sin asignar</span></td><td>Nadie lo tomó todavía. Está en «Disponibles».</td></tr>
+        <tr><td><span class="chip ASIGNADO">Asignado</span></td><td>Tiene técnico, pero todavía no empezó.</td></tr>
+        <tr><td><span class="chip EN_PROCESO">En proceso</span></td><td>El técnico está trabajando en él.</td></tr>
+        <tr><td><span class="chip EN_ESPERA">En espera</span></td><td>Depende de otro (repuesto, proveedor, el usuario). No cuenta como atrasado.</td></tr>
+        <tr><td><span class="chip RESUELTO">Resuelto</span></td><td>Terminado, con la solución escrita. Se puede reabrir.</td></tr>
+        <tr><td><span class="chip ANULADO">Anulado</span></td><td>Duplicado o error de carga. No se borra.</td></tr>
+        <tr><td><span class="chip atrasado">Atrasado</span></td><td>Pasó el tiempo objetivo de su prioridad sin resolverse.</td></tr>
+      </table>
+      <table>
+        <tr><th>Prioridad</th><th>Cuándo usarla</th><th>Objetivo</th></tr>
+        <tr><td><span class="chip URGENTE">Urgente</span></td><td>Un despacho entero sin trabajar (sin red, sin sistema de gestión) o una audiencia por empezar.</td><td>4 horas</td></tr>
+        <tr><td><span class="chip ALTA">Alta</span></td><td>Una persona no puede trabajar (PC que no enciende, sin correo).</td><td>24 horas</td></tr>
+        <tr><td><span class="chip MEDIA">Media</span></td><td>Se puede trabajar con dificultad (impresora que atasca, PC lenta).</td><td>3 días</td></tr>
+        <tr><td><span class="chip BAJA">Baja</span></td><td>Se puede planificar (instalar un programa, mover un equipo).</td><td>7 días</td></tr>
+      </table>
+      <p class="ayuda">Los tiempos objetivo son horas corridas desde que se recibió el pedido y se pueden cambiar en la configuración del servidor.</p>
+    </section>
+
+    <section class="hoja" id="preguntas">
+      <h2>13. Preguntas frecuentes</h2>
+      <h3>Cargué un ticket dos veces.</h3>
+      <p>Abra uno y use <b>Anular</b> con el motivo «duplicado del #…».</p>
+      <h3>Me asignaron un ticket que no es mío.</h3>
+      <p><b>👥 Reasignar / liberar</b>: páselo al compañero que corresponde o libérelo para que vuelva a «Disponibles».</p>
+      <h3>No puedo cambiar el estado de un ticket.</h3>
+      <p>Está asignado a otro técnico. Solo esa persona o el jefe pueden cambiarlo; usted puede dejar una nota.</p>
+      <h3>El sistema dice «el ticket cambió».</h3>
+      <p>Otra persona lo modificó mientras usted lo tenía abierto. Cierre la ficha y vuelva a abrirla.</p>
+      <h3>Olvidé mi contraseña.</h3>
+      <p>Pídale al jefe que le ponga una nueva (Administración → Usuarios → Editar). Después cámbiela en 👤 → 🔑 Cambiar contraseña.</p>
+      <h3>¿Dónde están los datos?</h3>
+      <p>En el servidor de la institución (<code>C:\Tickets\datos</code>). Todas las noches se hace un respaldo. Nada sale a internet.</p>
+      <p class="creditos">Desarrollado por la <b>Sección de Servicios Informáticos</b> · Circunscripción Judicial de Cordillera ·
+        con la asistencia de <b>Claude</b> (IA de Anthropic)</p>
+    </section>
+  </main>
+  <script>
+    document.querySelectorAll("figure img").forEach((img) => img.addEventListener("click", () => {
+      const z = document.createElement("div");
+      z.className = "zoom";
+      z.innerHTML = `<img src="${img.src}" alt="">`;
+      z.onclick = () => z.remove();
+      document.body.append(z);
+    }));
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") document.querySelector(".zoom")?.remove(); });
+  </script>
+</body>
+</html>

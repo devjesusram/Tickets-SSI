@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tickets de Soporte · Ingreso</title>
+  <link rel="stylesheet" href="/static/estilos.css">
+</head>
+<body>
+  <form class="login" id="form-login" autocomplete="on">
+    <h1>🎫 Tickets de Soporte</h1>
+    <p>Pedidos y tareas de la Sección de Servicios Informáticos</p>
+    <label for="usuario">Usuario</label>
+    <input type="text" id="usuario" name="usuario" autocomplete="username" required autofocus>
+    <label for="clave">Contraseña</label>
+    <input type="password" id="clave" name="clave" autocomplete="current-password" required>
+    <button class="btn primario" type="submit">Ingresar</button>
+    <div class="error" id="error" role="alert"></div>
+    <p style="margin:14px 0 0;text-align:center"><a href="/manual" target="_blank" rel="noopener">📖 Manual de usuario</a></p>
+    <p class="creditos">Desarrollado por la <b>Sección de Servicios Informáticos</b><br>Circunscripción Judicial de Cordillera<br>
+      con la asistencia de <b>Claude</b> (IA de Anthropic)</p>
+  </form>
+  <script>
+    document.getElementById("form-login").addEventListener("submit", async (ev) => {
+      ev.preventDefault();
+      const err = document.getElementById("error");
+      err.textContent = "";
+      try {
+        const r = await fetch("/api/login", {
+          method: "POST", headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ usuario: ev.target.usuario.value, clave: ev.target.clave.value }),
+        });
+        if (r.ok) { location.href = "/"; return; }
+        const d = await r.json().catch(() => ({}));
+        err.textContent = d.detail || "No se pudo iniciar sesión.";
+      } catch (e) {
+        err.textContent = "No hay conexión con el servidor.";
+      }
+    });
+  </script>
+</body>
+</html>
