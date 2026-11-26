@@ -44,7 +44,12 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          gh release create "$GITHUB_REF_NAME" dist/Tickets-Windows-*.zip \
-            --title "Sistema de Tickets ${GITHUB_REF_NAME#v}" \
-            --generate-notes \
-            --notes "Descomprima el ZIP en C:\\ (queda C:\\Tickets) y siga LEAME.txt o docs/INSTALACION-WINDOWS.md. Incluye Python portátil: no hace falta instalar nada ni tener internet en el servidor. Desarrollado por la Sección de Servicios Informáticos · Circunscripción Judicial de Cordillera · con la asistencia de Claude (IA de Anthropic)."
+          # Si el release ya fue creado a mano desde la web, solo se le agrega el ZIP.
+          if gh release view "$GITHUB_REF_NAME" >/dev/null 2>&1; then
+            gh release upload "$GITHUB_REF_NAME" dist/Tickets-Windows-*.zip --clobber
+          else
+            gh release create "$GITHUB_REF_NAME" dist/Tickets-Windows-*.zip \
+              --title "Sistema de Tickets ${GITHUB_REF_NAME#v}" \
+              --generate-notes \
+              --notes "Descomprima el ZIP en C:\\ (queda C:\\Tickets) y siga LEAME.txt o docs/INSTALACION-WINDOWS.md. Incluye Python portátil: no hace falta instalar nada ni tener internet en el servidor. Desarrollado por la Sección de Servicios Informáticos · Circunscripción Judicial de Cordillera · con la asistencia de Claude (IA de Anthropic)."
+          fi
